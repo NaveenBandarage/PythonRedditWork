@@ -57,14 +57,12 @@ scores = []
 # print(data['title'])
 # print(data['date'])
 
-
 for title in data["title"]:
     sentiment_score = 0
     try:
         for word in title:
-            sentiment_score = (
-                sentiment_score + analyser.polarity_scores(word)["compound"]
-            )
+            sentiment_score = (sentiment_score +
+                               analyser.polarity_scores(word)["compound"])
     except TypeError:
         print("Error")
         sentiment_score = 0
@@ -73,7 +71,6 @@ for title in data["title"]:
 print((scores))
 
 dataFrame["sentiment score"] = scores
-
 
 dataFrame.index = dataFrame["date"]
 # dataFrame=dataFrame.set_index('date', inplace=True)

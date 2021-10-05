@@ -1,10 +1,10 @@
 import csv
+import sqlite3
+import sys
 import time
 from datetime import datetime
-import pandas as pd
-import sys
-import sqlite3
 
+import pandas as pd
 import requests
 
 # usage python3 gettingUsersFromSubreddits.py (subredditname) (#OfComments) (#dbName) (#dbTable)

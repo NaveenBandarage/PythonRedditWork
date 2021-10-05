@@ -6,7 +6,7 @@ import sys
 import sqlite3
 
 import requests
-#usage python3 gettingUsersFromSubreddits.py (subredditname) (#OfComments) (#dbName) (#dbTable)
+# usage python3 gettingUsersFromSubreddits.py (subredditname) (#OfComments) (#dbName) (#dbTable)
 sub = sys.argv[1]
 SUBREDDITS = [sub]
 

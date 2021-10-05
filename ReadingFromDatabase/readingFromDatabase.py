@@ -1,11 +1,12 @@
 import datetime
-import praw
-from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
-import matplotlib.pyplot as plt
+import sqlite3
+
 import ffn
 import matplotlib.dates as mdates
+import matplotlib.pyplot as plt
 import pandas_datareader as pdr
-import sqlite3
+import praw
+from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 
 # python3 databaseName.db databaseTableName
 database = sys.argv[1]

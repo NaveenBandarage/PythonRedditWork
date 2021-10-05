@@ -1,0 +1,6 @@
+Same as before didn't feel like making a README. 
+
+File use: 
+python3 userAnalyser.py -u (insertUsernameHere)
+
+This analyses a user and shows various statistics for example how old their account is to what are the subreeddits that they post or comment most to. 

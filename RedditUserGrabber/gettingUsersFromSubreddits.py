@@ -81,7 +81,6 @@ def load_comments(subreddit, latest_timestamp=None):
 
 init()
 
-
 data = {}
 data["date"] = dateList
 data["username"] = usernameList
@@ -95,7 +94,10 @@ try:
     sqliteConnection = sqlite3.connect(dbName)
     cursor = sqliteConnection.cursor()
     print("Successfully Connected to SQLite")
-    dfTest.to_sql(dbTableName, sqliteConnection, if_exists="replace", index=False)
+    dfTest.to_sql(dbTableName,
+                  sqliteConnection,
+                  if_exists="replace",
+                  index=False)
     sqliteConnection.commit()
     print("Record inserted successfully into the database ", cursor.rowcount)
     rows = cursor.fetchall()

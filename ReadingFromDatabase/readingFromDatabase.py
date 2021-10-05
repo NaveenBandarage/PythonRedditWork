@@ -23,7 +23,7 @@ for row in rows:
     print(row)
 
 # Converting to Dataframe
-df = pd.DataFrame(rows, columns=['id', 'title', 'url', 'date', 'flair'])
+df = pd.DataFrame(rows, columns=["id", "title", "url", "date", "flair"])
 print(df)
 
 conn.close()
@@ -42,11 +42,11 @@ for stat in subStats:
         dates.append(items[5])
         flairs.append(items[8])
 
-data['id'] = ids
-data['title'] = titles
-data['url'] = urls
-data['date'] = dates
-data['flair'] = flairs
+data["id"] = ids
+data["title"] = titles
+data["url"] = urls
+data["date"] = dates
+data["flair"] = flairs
 dataFrame = pd.DataFrame(data)
 # dataFrame=dataFrame[dataFrame['flair']=='BTC']
 # need to look at this https://towardsdatascience.com/scraping-reddit-data-1c0af3040768 properly
@@ -57,12 +57,13 @@ scores = []
 # print(data['date'])
 
 
-for title in data['title']:
+for title in data["title"]:
     sentiment_score = 0
     try:
         for word in title:
-            sentiment_score = sentiment_score + \
-                analyser.polarity_scores(word)['compound']
+            sentiment_score = (
+                sentiment_score + analyser.polarity_scores(word)["compound"]
+            )
     except TypeError:
         print("Error")
         sentiment_score = 0
@@ -70,20 +71,22 @@ for title in data['title']:
     scores.append(sentiment_score)
 print((scores))
 
-dataFrame['sentiment score'] = scores
+dataFrame["sentiment score"] = scores
 
 
-dataFrame.index = dataFrame['date']
+dataFrame.index = dataFrame["date"]
 # dataFrame=dataFrame.set_index('date', inplace=True)
-dataFrame = dataFrame.resample('D').mean()
+dataFrame = dataFrame.resample("D").mean()
 
-btc_data = pdr.get_data_yahoo(['BTC-USD'],
-                              start=datetime.datetime(2020, 1, 1),
-                              end=datetime.datetime(2020, 12, 29))['Close']
+btc_data = pdr.get_data_yahoo(
+    ["BTC-USD"],
+    start=datetime.datetime(2020, 1, 1),
+    end=datetime.datetime(2020, 12, 29),
+)["Close"]
 
-print(btc_data['BTC-USD'])
+print(btc_data["BTC-USD"])
 x = dataFrame.index
-y = dataFrame['sentiment score']
+y = dataFrame["sentiment score"]
 print(x)
 print(y)
 
@@ -95,6 +98,6 @@ plt.xlabel("Date")
 plt.ylabel("Sentiment Score")  # same with this as well.
 # plt.set_xlabel('date')
 ax2 = plt.twinx()  # instantiate a second axes that shares the same x-axis
-ax2.set_ylabel('Price')
-ax2.set_xlabel('Date')
-ax2.plot(btc_data, color='orange')
+ax2.set_ylabel("Price")
+ax2.set_xlabel("Date")
+ax2.plot(btc_data, color="orange")

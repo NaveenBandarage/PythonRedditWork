@@ -6,6 +6,7 @@ import sys
 import sqlite3
 
 import requests
+
 # usage python3 gettingUsersFromSubreddits.py (subredditname) (#OfComments) (#dbName) (#dbTable)
 sub = sys.argv[1]
 SUBREDDITS = [sub]
@@ -35,8 +36,12 @@ def load_comments(subreddit, latest_timestamp=None):
 
     base_url = "https://api.pushshift.io/reddit/comment/search/"
 
-    params = {"subreddit": subreddit, "sort": "desc",
-              "sort_type": "created_utc", "size": 500}
+    params = {
+        "subreddit": subreddit,
+        "sort": "desc",
+        "sort_type": "created_utc",
+        "size": 500,
+    }
 
     # After the first call of this function we will use the 'before' parameter.
     if latest_timestamp != None:
@@ -65,8 +70,7 @@ def load_comments(subreddit, latest_timestamp=None):
             usernameList.append(user)
             commentList.append(comment)
 
-            COMMENTS_LIST.append(
-                [iso_date, item["author"], item["body"]])
+            COMMENTS_LIST.append([iso_date, item["author"], item["body"]])
 
         if len(COMMENTS_LIST) >= int(MAX_COMMENTS):
             print("Download complete.")
@@ -79,9 +83,9 @@ init()
 
 
 data = {}
-data['date'] = dateList
-data['username'] = usernameList
-data['comment'] = commentList
+data["date"] = dateList
+data["username"] = usernameList
+data["comment"] = commentList
 dfTest = pd.DataFrame(data)
 print(dfTest)
 
@@ -91,8 +95,7 @@ try:
     sqliteConnection = sqlite3.connect(dbName)
     cursor = sqliteConnection.cursor()
     print("Successfully Connected to SQLite")
-    dfTest.to_sql(dbTableName, sqliteConnection,
-                  if_exists='replace', index=False)
+    dfTest.to_sql(dbTableName, sqliteConnection, if_exists="replace", index=False)
     sqliteConnection.commit()
     print("Record inserted successfully into the database ", cursor.rowcount)
     rows = cursor.fetchall()
@@ -104,6 +107,6 @@ try:
 except sqlite3.Error as error:
     print("Failed to insert data into sqlite table", error)
 finally:
-    if (sqliteConnection):
+    if sqliteConnection:
         sqliteConnection.close()
         print("The SQLite connection is closed")

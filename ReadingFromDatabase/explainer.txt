@@ -1,6 +1,6 @@
-This is following a pattern if you didn't realise lmao. 
+This is following a pattern if you didn't realise lmao.
 
-File use: 
+File use:
 python3 readingFromDatabase.py databaseName.db databaseTableName
 
 Pretty self explanatory what this file does it was for reading from the databases I was using at the time. This was the inital copy and then I implemented it into other files.

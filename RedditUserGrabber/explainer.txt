@@ -1,5 +1,5 @@
-Could have used a README but tbh don't feel like its that necessary. 
-To run the file: 
+Could have used a README but tbh don't feel like its that necessary.
+To run the file:
 python3 gettingUsersFromSubreddits.py (subredditname) (#OfComments) (#dbName) (#dbTable)
 
-Basically it will look through the subreddit you specify and based on the amount of comments you specifiy. It will begin to extract users from there and save it into the database and table specified. 
+Basically it will look through the subreddit you specify and based on the amount of comments you specifiy. It will begin to extract users from there and save it into the database and table specified.

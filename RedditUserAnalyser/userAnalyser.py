@@ -30,7 +30,8 @@ colorama.init()
 
 # Parse arguments
 parser = argparse.ArgumentParser(
-    description="Reddit Account Analyzer (https://github.com/rafficer/reddit-analyzer) Version %s"
+    description=
+    "Reddit Account Analyzer (https://github.com/rafficer/reddit-analyzer) Version %s"
     % __version__,
     usage="%(prog)s -u <username> [options]",
 )
@@ -38,12 +39,14 @@ parser.add_argument(
     "-t",
     "--top",
     type=int,
-    help='Specifies how many entries per top list. "0" outputs all entries of a toplist. Default: 5',
+    help=
+    'Specifies how many entries per top list. "0" outputs all entries of a toplist. Default: 5',
 )
 parser.add_argument(
     "-r",
     "--subreddit",
-    help="Prints links to all submissions/comments of user to that specific subreddit",
+    help=
+    "Prints links to all submissions/comments of user to that specific subreddit",
 )
 
 args = parser.parse_args()
@@ -52,8 +55,10 @@ args = parser.parse_args()
 def apirequest(url):
     request_headers = {
         "Accept-Language": "en-US,en;q=0.5",
-        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0",
-        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "User-Agent":
+        "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:40.0) Gecko/20100101 Firefox/40.0",
+        "Accept":
+        "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         "Referer": "https://reddit.com",
         "Connection": "keep-alive",
     }
@@ -87,7 +92,8 @@ def populate_dics(username, option):
             lst.append(entry)
         name = data["data"]["children"][num - 1]["data"]["name"]
         print(
-            "\033[93m" + "Fetched %d %s" % (total, switch2[option]) + "\033[0m",
+            "\033[93m" + "Fetched %d %s" % (total, switch2[option]) +
+            "\033[0m",
             end="\r",
         )
     return lst
@@ -119,14 +125,15 @@ def print_stats(statlist, statname, storageList):
     print("\033[0m")
     for x in range(top):
 
-        print("- ", ("{:<%d}" % maxlen_name).format(statlist[0][x]), end="")  # Name
+        print("- ", ("{:<%d}" % maxlen_name).format(statlist[0][x]),
+              end="")  # Name
         storageList.append(statlist[0][x])
         print(":", end="")
-        print(("{:>%d}" % maxlen_value).format(statlist[1][x]), end="")  # Value
+        print(("{:>%d}" % maxlen_value).format(statlist[1][x]),
+              end="")  # Value
         print("|", end="")
-        print(
-            "(%.1f%%)" % (float(statlist[1][x]) / sum(statlist[1]) * 100)
-        )  # Percentage
+        print("(%.1f%%)" %
+              (float(statlist[1][x]) / sum(statlist[1]) * 100))  # Percentage
     # for x in range(top):
 
 
@@ -186,13 +193,11 @@ def print_charts(dataset, title, weekday=False):
 
     for key in keys:
         if dataset[key] >= median * 1.33:
-            displayed_key = "%s (\033[92m+\033[0m)" % (
-                int_to_weekday(key) if weekday else key
-            )
+            displayed_key = "%s (\033[92m+\033[0m)" % (int_to_weekday(key)
+                                                       if weekday else key)
         elif dataset[key] <= median * 0.66:
-            displayed_key = "%s (\033[91m-\033[0m)" % (
-                int_to_weekday(key) if weekday else key
-            )
+            displayed_key = "%s (\033[91m-\033[0m)" % (int_to_weekday(key)
+                                                       if weekday else key)
         else:
             displayed_key = int_to_weekday(key) if weekday else key
 
@@ -218,7 +223,8 @@ def print_charts(dataset, title, weekday=False):
 
 
 def int_to_weekday(day):
-    weekdays = "Monday Tuesday Wednesday Thursday Friday Saturday Sunday".split()
+    weekdays = "Monday Tuesday Wednesday Thursday Friday Saturday Sunday".split(
+    )
     return weekdays[int(day) % len(weekdays)]
 
 
@@ -253,14 +259,16 @@ def print_activity_charts(commentlist, submissionlist):
 
     if len(commentlist) > 0:
         for comment in commentlist:
-            time = datetime.datetime.utcfromtimestamp(comment["data"]["created_utc"])
+            time = datetime.datetime.utcfromtimestamp(
+                comment["data"]["created_utc"])
             hour = str(time.hour).zfill(2) + ":00"
             weekdaydic[time.weekday()] += 1
             hourdic[hour] += 1
 
     if len(submissionlist) > 0:
         for submission in submissionlist:
-            time = datetime.datetime.utcfromtimestamp(submission["data"]["created_utc"])
+            time = datetime.datetime.utcfromtimestamp(
+                submission["data"]["created_utc"])
             hour = str(time.hour).zfill(2) + ":00"
             weekdaydic[time.weekday()] += 1
             hourdic[hour] += 1
@@ -329,9 +337,8 @@ def sort_data(dic):
     return sorted_list
 
 
-def writeToSql(
-    userName, subredditPosts, subredditComments, testDBname, testDbtable, dataFrameList
-):
+def writeToSql(userName, subredditPosts, subredditComments, testDBname,
+               testDbtable, dataFrameList):
     data = {}
     data["username"] = userName
     data["top5Posts"] = subredditPosts
@@ -353,7 +360,8 @@ def writeToSql(
         print("Successfully Connected to SQLite")
         dfTest.to_sql(dbTableName, sqliteConnection, if_exists="append")
         sqliteConnection.commit()
-        print("Record inserted successfully into the database ", cursor.rowcount)
+        print("Record inserted successfully into the database ",
+              cursor.rowcount)
         rows = cursor.fetchall()
 
         for row in rows:
@@ -380,31 +388,32 @@ def usermain(userName, testDBname, testDbtable, dataFrameList):
     accountstats = apirequest(f"https://api.reddit.com/user/{userName}/about")
     print("Accountname:", accountstats["data"]["name"])
     total_karma = int(accountstats["data"]["comment_karma"]) + int(
-        accountstats["data"]["link_karma"]
-    )
+        accountstats["data"]["link_karma"])
     print("Total Karma:", total_karma)
     if total_karma != 0:
         print(
             "Comment Karma:",
             accountstats["data"]["comment_karma"],
             "|",
-            "(%.1f%%)"
-            % (float(accountstats["data"]["comment_karma"]) / total_karma * 100),
+            "(%.1f%%)" %
+            (float(accountstats["data"]["comment_karma"]) / total_karma * 100),
         )
         print(
             "Post Karma:",
             accountstats["data"]["link_karma"],
             "|",
-            "(%.1f%%)"
-            % (float(accountstats["data"]["link_karma"]) / total_karma * 100),
+            "(%.1f%%)" %
+            (float(accountstats["data"]["link_karma"]) / total_karma * 100),
         )
     print()
     print(
         "Account created:",
-        datetime.datetime.utcfromtimestamp(accountstats["data"]["created_utc"]),
+        datetime.datetime.utcfromtimestamp(
+            accountstats["data"]["created_utc"]),
         "UTC",
     )
-    print("Account Age:", difference_from_unixtime(accountstats["data"]["created_utc"]))
+    print("Account Age:",
+          difference_from_unixtime(accountstats["data"]["created_utc"]))
     print()
     print()
     # print_activity_charts(comments, submissions)
@@ -428,9 +437,8 @@ def usermain(userName, testDBname, testDbtable, dataFrameList):
         print()
     if len(submissions) > 0:
         test = []
-        print_stats(
-            sort_data(filter_data(submissions, "domain")), "Top domains posted", test
-        )
+        print_stats(sort_data(filter_data(submissions, "domain")),
+                    "Top domains posted", test)
         print()
     if len(comments) > 0:
         test2 = []

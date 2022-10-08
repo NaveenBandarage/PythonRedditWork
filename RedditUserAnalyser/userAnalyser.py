@@ -14,7 +14,9 @@ import pandas as pd
 import requests
 from ascii_graph import Pyasciigraph
 from ascii_graph.colordata import hcolor
-from ascii_graph.colors import Gre, Red, Yel
+from ascii_graph.colors import Gre
+from ascii_graph.colors import Red
+from ascii_graph.colors import Yel
 
 __version__ = "1.1.0"
 # create virtual environemnt - python3 -m venv env

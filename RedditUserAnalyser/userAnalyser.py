@@ -17,7 +17,7 @@ import pandas as pd
 import sqlite3
 
 __version__ = '1.1.0'
-# Crreate virtual environemnt - python3 -m venv env
+# create virtual environemnt - python3 -m venv env
 
 # Run virtual environment -source env/bin/activate
 
@@ -85,13 +85,6 @@ def populate_dics(username, option):
     return lst
 
 
-# Sort data descending counts
-def sort_data(dic):
-    sorted_list = [[], [], []]
-    for pair in reversed(sorted(dic.items(), key=itemgetter(1))):
-        sorted_list[0].append(pair[0])
-        sorted_list[1].append(pair[1])
-    return sorted_list
 
 
 def print_stats(statlist, statname, storageList):
@@ -319,18 +312,13 @@ def print_subreddit_links(commentlist, submissionlist):
         print("No submissions in /r/" + args.subreddit)
 
 
-# taken from the article i read helps with reading
-
-
-# def new_shelffile(userName):
-#     shelffile = shelve.open(f"{userName}.shelf",)
-#     comments = populate_dics(userName, "c")
-#     submissions = populate_dics(userName, "s")
-#     shelffile['comments'] = comments
-#     shelffile['submissions'] = submissions
-#     shelffile['time'] = time.time()
-#     shelffile.close()
-#     return comments, submissions
+# Sort data descending counts
+def sort_data(dic):
+    sorted_list = [[], [], []]
+    for pair in reversed(sorted(dic.items(), key=itemgetter(1))):
+        sorted_list[0].append(pair[0])
+        sorted_list[1].append(pair[1])
+    return sorted_list
 
 
 def writeToSql(userName, subredditPosts, subredditComments, testDBname, testDbtable, dataFrameList):
@@ -342,33 +330,33 @@ def writeToSql(userName, subredditPosts, subredditComments, testDBname, testDbta
 
     information = [userName, subredditPosts, subredditComments]
     dataFrameList.append(data)
-    # dfTest = pd.DataFrame(data)
-    # dfTest = pd.DataFrame(data)
+    dfTest = pd.DataFrame(data)
+    dfTest = pd.DataFrame(data)
 
-    # print(dfTest)
+    print(dfTest)
 
-    # dbName = testDBname
-    # dbTableName = testDbtable
-    # try:
-    #     sqliteConnection = sqlite3.connect(dbName)
-    #     cursor = sqliteConnection.cursor()
-    #     print("Successfully Connected to SQLite")
-    #     dfTest.to_sql(dbTableName, sqliteConnection,
-    #                   if_exists='append')
-    #     sqliteConnection.commit()
-    #     print("Record inserted successfully into the database ", cursor.rowcount)
-    #     rows = cursor.fetchall()
+    dbName = testDBname
+    dbTableName = testDbtable
+    try:
+        sqliteConnection = sqlite3.connect(dbName)
+        cursor = sqliteConnection.cursor()
+        print("Successfully Connected to SQLite")
+        dfTest.to_sql(dbTableName, sqliteConnection,
+                      if_exists='append')
+        sqliteConnection.commit()
+        print("Record inserted successfully into the database ", cursor.rowcount)
+        rows = cursor.fetchall()
 
-    #     for row in rows:
-    #         print(row)
-    #     cursor.close()
+        for row in rows:
+            print(row)
+        cursor.close()
 
-    # except sqlite3.Error as error:
-    #     print("Failed to insert data into sqlite table", error)
-    # finally:
-    #     if (sqliteConnection):
-    #         sqliteConnection.close()
-    #         print("The SQLite connection is closed")
+    except sqlite3.Error as error:
+        print("Failed to insert data into sqlite table", error)
+    finally:
+        if (sqliteConnection):
+            sqliteConnection.close()
+            print("The SQLite connection is closed")
 
 
 testDBname = ""
@@ -432,8 +420,3 @@ def usermain(userName, testDBname, testDbtable, dataFrameList):
     writeToSql(userName, topActiveSubsPosts,
                topActiveSubsComments, testDBname, testDbTable, dataFrameList)
 
-
-# if args.subreddit == None:
-#     usermain(userName)
-# else:
-#     print_subreddit_links(comments, submissions)

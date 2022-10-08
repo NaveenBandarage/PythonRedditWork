@@ -85,8 +85,6 @@ def populate_dics(username, option):
     return lst
 
 
-
-
 def print_stats(statlist, statname, storageList):
     # statlist is a list containing 2 lists, looking like this: [[namelist],[valuelist]] e.g [["AskReddit", "TIL"],[5,6]]
     helperlist = []
@@ -419,4 +417,3 @@ def usermain(userName, testDBname, testDbtable, dataFrameList):
 
     writeToSql(userName, topActiveSubsPosts,
                topActiveSubsComments, testDBname, testDbTable, dataFrameList)
-

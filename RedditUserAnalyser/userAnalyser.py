@@ -1,19 +1,20 @@
-import json
 import argparse
-import requests
 import datetime
-from operator import itemgetter
-from ascii_graph import Pyasciigraph
-from ascii_graph.colors import Gre, Yel, Red
-from ascii_graph.colordata import hcolor
-import numpy
-import sys
-import colorama
-import shelve
-import time
 import dbm
-import pandas as pd
+import json
+import shelve
 import sqlite3
+import sys
+import time
+from operator import itemgetter
+
+import colorama
+import numpy
+import pandas as pd
+import requests
+from ascii_graph import Pyasciigraph
+from ascii_graph.colordata import hcolor
+from ascii_graph.colors import Gre, Red, Yel
 
 __version__ = "1.1.0"
 # create virtual environemnt - python3 -m venv env
